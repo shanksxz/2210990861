@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
-import { TopUsers } from '@/features/users/TopUsers';
+import { TopUsers } from '@/features/users/top-users';
 import { TrendingPosts } from '@/features/posts/trending-post';
 import { Feed } from '@/features/posts/feed';
 
