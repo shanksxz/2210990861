@@ -42,4 +42,52 @@ export class ApiController {
       res.status(500).json({ error: 'Failed to fetch comments' });
     }
   }
+
+ static async getTopUsers(req: Request, res: Response) {
+    try {
+      const startTime = Date.now();
+      const users = await ApiService.getTopUsers();
+      const responseTime = Date.now() - startTime;
+      
+      res.header('X-Response-Time', `${responseTime}ms`);
+      res.json({
+        data: users,
+        metadata: {
+          responseTime: `${responseTime}ms`,
+          timestamp: new Date().toISOString()
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch top users' });
+    }
+  }
+
+  static async getPosts(req: Request, res: Response) {
+    try {
+      const startTime = Date.now();
+      console.log(req.query.type);
+      const type = req.query.type as 'popular' | 'latest';
+      console.log(type);
+      
+      if (!type || !['popular', 'latest'].includes(type)) {
+         res.status(400).json({ error: 'Invalid post type. Must be "popular" or "latest"' });
+         return;
+      }
+
+      const posts = await ApiService.getPosts(type);
+      const responseTime = Date.now() - startTime;
+
+      res.header('X-Response-Time', `${responseTime}ms`);
+      res.json({
+        data: posts,
+        metadata: {
+          responseTime: `${responseTime}ms`,
+          timestamp: new Date().toISOString(),
+          type
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch posts' });
+    }
+  }
 }

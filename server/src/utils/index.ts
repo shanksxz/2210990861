@@ -79,4 +79,56 @@ export class ApiService {
   static async getPostComments(postId: string) {
     return this.makeRequest(`/posts/${postId}/comments`);
   }
+
+  static async getTopUsers() {
+    try {
+      const users = await this.makeRequest<any>('/users');
+      const userPostsPromises = Object.entries(users.users).map(async ([userId, name]) => {
+        const posts: any = await this.getUserPosts(userId);
+        return {
+          id: userId,
+          name,
+          postCount: posts.posts.length
+        };
+      });
+
+      const usersWithPosts = await Promise.all(userPostsPromises);
+      return usersWithPosts
+        .sort((a, b) => b.postCount - a.postCount)
+        .slice(0, 5);
+    } catch (error) {
+      throw new Error('Failed to fetch top users');
+    }
+  }
+
+  static async getPosts(type: 'popular' | 'latest') {
+    try {
+      const users: any = await this.getUsers();
+      const allPosts: any[] = [];
+
+      for (const [userId, userName] of Object.entries(users.users)) {
+        const userPosts: any = await this.getUserPosts(userId);
+        for (const post of userPosts.posts) {
+          const comments: any = await this.getPostComments(post.id.toString());
+          allPosts.push({
+            ...post,
+            userName,
+            commentCount: comments.comments.length
+          });
+        }
+      }
+
+      if (type === 'popular') {
+        return allPosts
+          .sort((a, b) => b.commentCount - a.commentCount)
+          .filter(post => post.commentCount > 0);
+      } else {
+        return allPosts
+          .sort((a, b) => b.id - a.id)
+          .slice(0, 5);
+      }
+    } catch (error) {
+      throw new Error('Failed to fetch posts');
+    }
+  }
 } 
