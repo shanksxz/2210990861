@@ -26,9 +26,10 @@ A simple social media analytics dashboard built with React, TypeScript, and Tail
 ```
 server/
 ├── src/
+│ ├── config/
 │ ├── routes/
 │ ├── controller/
-│ ├── services/
+│ ├── utils/
 │ └── types/
 ```
 
