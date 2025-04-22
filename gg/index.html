@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="./script.js"></script>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            border: 2px solid black;
+            padding: 20px;
+            max-width: 50vw;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            > h1 {
+                text-align: center;
+            }
+
+            > button {
+                border-radius: 2px;
+                border: none;
+                padding: 5px;
+            }
+
+            > #calc {
+                background-color: blue;
+                color: white;
+            }
+
+            > #clear {
+                background-color: gray;
+                color: white;
+            }
+
+            > .result {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+                gap: 5px;
+
+                > .res-child {
+                    padding: 2px;
+                }
+
+                > .gg {
+                    padding: 2px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: aqua;
+                    height: 35px;
+                    width: 100px;
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Word Count Calculator</h1>
+        <textarea name="input" rows="7" id="input"></textarea>
+        <button id="calc">Calculate</button>
+        <button id="clear">Clear Text</button>
+        <div class="result">
+            <div class="gg">
+                <div id="res-words" class="res-child">0</div>
+                Words
+            </div>
+            <div class="gg">
+                <div id="res-characters" class="res-child">0</div>
+                Characters
+            </div>
+            <div class="gg">
+                <div id="res-sentences" class="res-child">0</div>
+                Sentences
+            </div>
+        </div>
+    </div>
+</body>
+</html>
