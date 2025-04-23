@@ -1,0 +1,6 @@
+crud
+nutrition app
+entry - any time
+  name, cal, breakdown(protein, carbo, fat), quantity(kg)
+create/update
+/get -> daily aggregation, target(cal and breakdown)
